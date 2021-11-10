@@ -23,6 +23,12 @@ export function GlobalContextProvider(props: ApplicationContextInterface) {
     cedula: "",
     fNacimiento: "",
     carrera: "",
+    correo: "",
+    fprestamo: "",
+    fentrega: "",
+    hinicial: "",
+    hhora: "",
+    hhorafinal: "",
   });
   console.log("el Estado actual es ", userData);
 
