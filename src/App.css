@@ -1,0 +1,17 @@
+body {
+  background-color: #fff;
+}
+.m-header {
+  text-align: center;
+  background-color: #DAE3F3;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  color: #404040;
+}
+.App {
+  margin-top: 100px;
+  text-align: center;
+
+  
+}
