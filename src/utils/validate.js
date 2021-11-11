@@ -60,10 +60,10 @@ export const validateIndependent = (state, currentPage) => {
     if (currentPage === 3) {
         return true // validacion Reserva
     }
-    if (currentPage === 0) {
-        return validateBasicIndependent(state)
+    if (currentPage === 4) {
+        return true // Validacion Materiales
     }
-    if (currentPage === 0) {
-        return validateBasicIndependent(state)
+    if (currentPage === 5) {
+        return true // Validacion Creacion Salas
     }
 };

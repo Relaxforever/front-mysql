@@ -127,9 +127,116 @@ export const CreateReserva = async (state, statebook) => {
 
 export const getSalaPrestamoName = async (state, stateset) => {
     const url = 'http://localhost:4000'
-    const endpoint = '/prestamos/'
+    const endpoint = '/reservas/'
     const params = state.codigo
     const response = await axios.get(`${url}${endpoint}${params}`)
-    const response2 = await axios.get(`${url}/materials/${response.data.length !== 0 ? response.data[0].Cod_Material : ''}`)
+    const response2 = await axios.get(`${url}/salaestudio/${response.data.length !== 0 ? response.data[0].Cod_Sala : ''}`)
     stateset({ response: response.data, response2: response2.data })
+}
+
+export const deleteReserva = async (state) => {
+    const url = 'http://localhost:4000'
+    const endpoint = '/reservas/'
+    const params = state
+    const response = await axios.delete(`${url}${endpoint}${params}`)
+    return response
+}
+
+
+
+
+
+
+export const CreateMaterial = async (state) => {
+    const url = 'http://localhost:4000'
+    const endpoint = '/materials/'
+    const bodyData = {
+        "Codigo": state.codigomaterial,
+        "F_Publicacion": state.fpublicacion,
+        "Categoria": state.categoria,
+        "Autores": {
+            "Autor1": state.autor
+        },
+        "Disponibilidad": "Disponible",
+        "Nombre": state.nombrelibro,
+        "Num_Ejemplares": state.Num_Ejemplares,
+        "Formato": state.formatomaterial,
+    }
+    const response = await axios.post(`${url}${endpoint}`, bodyData)
+
+    return response
+}
+
+export const updateMaterial = async (state) => {
+    const url = 'http://localhost:4000'
+    const endpoint = '/materials/'
+    const params = state.codigomaterial
+    const bodyData = {
+        "Codigo": state.codigomaterial,
+        "F_Publicacion": state.fpublicacion,
+        "Categoria": state.categoria,
+        "Autores": {
+            "Autor1": state.autor
+        },
+        "Disponibilidad": "Disponible",
+        "Formato": state.fomatomaterial,
+        "Nombre": state.nombrelibro,
+        "Num_Ejemplares": state.Num_Ejemplares
+    }
+    const response = await axios.put(`${url}${endpoint}${params}`, bodyData)
+    return response
+}
+
+export const deleteMaterial = async (state) => {
+    const url = 'http://localhost:4000'
+    const endpoint = '/materials/'
+    const params = state.codigomaterial
+    const response = await axios.delete(`${url}${endpoint}${params}`)
+    return response
+}
+
+
+
+
+
+export const CreateSalaEstudio = async (state) => {
+    const url = 'http://localhost:4000'
+    const endpoint = '/salaestudio/'
+    const bodyData = {
+        "Codigo": state.codigosala,
+        "Nombre": state.nombresala,
+        "Inventario": {
+            "Mesas": state.mesas,
+            "Sillas": state.sillas,
+        },
+        "Num_Personas_Max": state.num_max,
+    }
+    const response = await axios.post(`${url}${endpoint}`, bodyData)
+
+    return response
+}
+
+export const updateSalaEstudio = async (state) => {
+    const url = 'http://localhost:4000'
+    const endpoint = '/salaestudio/'
+    const params = state.codigosala
+    const bodyData = {
+        "Codigo": state.codigosala,
+        "Nombre": state.nombresala,
+        "Inventario": {
+            "Mesas": state.mesas,
+            "Sillas": state.sillas,
+        },
+        "Num_Personas_Max": state.num_max,
+    }
+    const response = await axios.put(`${url}${endpoint}${params}`, bodyData)
+    return response
+}
+
+export const deleteSalaEstudio = async (state) => {
+    const url = 'http://localhost:4000'
+    const endpoint = '/salaestudio/'
+    const params = state.codigosala
+    const response = await axios.delete(`${url}${endpoint}${params}`)
+    return response
 }

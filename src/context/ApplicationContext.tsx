@@ -29,6 +29,20 @@ export function GlobalContextProvider(props: ApplicationContextInterface) {
     hinicial: "",
     hhora: "",
     hhorafinal: "",
+
+    codigomaterial: "",
+    fpublicacion: "",
+    categoria: "",
+    autor: "",
+    formatomaterial: "",
+    nombrelibro: "",
+    num_ejemplares: "",
+
+    codigosala: "",
+    nombresala: "",
+    mesas: "",
+    sillas: "",
+    num_max: "",
   });
   console.log("el Estado actual es ", userData);
 
