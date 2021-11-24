@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const getAllUsers = async () => {
-    const url = 'http://localhost:5000'
+    const url = 'http://localhost:8080'
     const endpoint = '/api/usuarios'
     const response = await axios.get(`${url}${endpoint}`)
 
@@ -11,7 +11,7 @@ export const getAllUsers = async () => {
 
 
 export const Createuser = async (state) => {
-    const url = 'http://localhost:5000'
+    const url = 'http://localhost:8080'
     const endpoint = '/api/usuarios'
     const bodyData = {
         "codigo": state.codigo,
@@ -28,7 +28,7 @@ export const Createuser = async (state) => {
 }
 
 export const updateUser = async (state) => {
-    const url = 'http://localhost:5000'
+    const url = 'http://localhost:8080'
     const endpoint = '/api/usuarios/'
     const params = state.codigo
     const bodyData = {
@@ -40,12 +40,12 @@ export const updateUser = async (state) => {
         "fechaNacimiento": state.fNacimiento,
         "carrera": state.carrera
     }
-    const response = await axios.patch(`${url}${endpoint}${params}`, bodyData)
+    const response = await axios.put(`${url}${endpoint}${params}`, bodyData)
     return response
 }
 
 export const deleteUser = async (state) => {
-    const url = 'http://localhost:5000'
+    const url = 'http://localhost:8080'
     const endpoint = '/api/usuarios/'
     const params = state.codigo
     const response = await axios.delete(`${url}${endpoint}${params}`)
@@ -53,7 +53,7 @@ export const deleteUser = async (state) => {
 }
 
 export const getUserCode = async (state) => {
-    const url = 'http://localhost:5000'
+    const url = 'http://localhost:8080'
     const endpoint = '/api/usuarios/'
     const params = state.codigo
     const response = await axios.get(`${url}${endpoint}${params}`)
@@ -62,7 +62,7 @@ export const getUserCode = async (state) => {
 }
 
 export const getAllMaterials = async (state) => {
-    const url = 'http://localhost:5000'
+    const url = 'http://localhost:8080'
     const endpoint = '/api/materiales'
     const response = await axios.get(`${url}${endpoint}`)
     state(response)
@@ -71,35 +71,36 @@ export const getAllMaterials = async (state) => {
 
 
 export const CreatePrestamo = async (state, statebook) => {
-    const url = 'http://localhost:5000'
+    const url = 'http://localhost:8080'
     const endpoint = '/api/usuarios/prestamo/'
     const params = state.codigo
     const bodyData = {
+        "codigo": state.codigo,
         "codigoMaterial": statebook.codigo,
         "fecha_prestamo": state.fprestamo,
         "fecha_entrega": state.fentrega,
         "nombre": statebook.nombre,
         "multa": 1500
     }
-    const response = await axios.patch(`${url}${endpoint}${params}`, bodyData)
+    const response = await axios.post(`${url}${endpoint}${params}`, bodyData)
 
     return response
 }
 
 export const getUserCodePrestamo = async (state, stateset) => {
-    const url = 'http://localhost:5000'
-    const endpoint = '/api/usuarios/'
+    const url = 'http://localhost:8080'
+    const endpoint = '/api/usuarios/prestamo/'
     const params = state.codigo
     const response = await axios.get(`${url}${endpoint}${params}`)
     console.log(response)
-    stateset({ response: response.data.prestamos_material })
+    stateset({ response: response.data })
 }
 
 
 
 
 export const getbookPrestamoName = async (state, stateset) => {
-    const url = 'http://localhost:5000'
+    const url = 'http://localhost:8080'
     const endpoint = '/prestamos/'
     const params = state.codigo
     const response = await axios.get(`${url}${endpoint}${params}`)
@@ -108,16 +109,16 @@ export const getbookPrestamoName = async (state, stateset) => {
 }
 
 export const deletePrestamo = async (state, name) => {
-    const url = 'http://localhost:5000'
-    const endpoint = '/api/usuarios/prestamo/borrar/'
+    const url = 'http://localhost:8080'
+    const endpoint = '/api/usuarios/prestamo/'
     const params = state.codigo
-    const response = await axios.patch(`${url}${endpoint}${params}`, { nombre: name })
+    const response = await axios.delete(`${url}${endpoint}${params}`, { nombre: name })
     return response
 }
 
 // Get all Salas
 export const getAllSalas = async (state) => {
-    const url = 'http://localhost:5000'
+    const url = 'http://localhost:8080'
     const endpoint = '/api/salas'
     const response = await axios.get(`${url}${endpoint}`)
     state(response)
@@ -125,28 +126,29 @@ export const getAllSalas = async (state) => {
 }
 
 export const CreateReserva = async (state, statebook) => {
-    const url = 'http://localhost:5000'
+    const url = 'http://localhost:8080'
     const endpoint = '/api/usuarios/salas/'
     console.log(statebook.codigo)
     const params = state.codigo
     const bodyData = {
+        "codigo": state.codigo,
         "codigoSala": statebook.codigo,
         "fecha_prestamo": state.hinicial + ' ' + state.hhora,
         "fecha_entrega": state.hinicial + ' ' + state.hhorafinal,
         "nombre": statebook.nombre
     }
-    const response = await axios.patch(`${url}${endpoint}${params}`, bodyData)
+    const response = await axios.post(`${url}${endpoint}${params}`, bodyData)
 
     return response
 }
 
 export const getSalasNames = async (state, stateset) => {
-    const url = 'http://localhost:5000'
-    const endpoint = '/api/usuarios/'
+    const url = 'http://localhost:8080'
+    const endpoint = '/api/usuarios/salas/'
     const params = state.codigo
     const response = await axios.get(`${url}${endpoint}${params}`)
     console.log(response)
-    stateset({ response: response.data.reserva })
+    stateset({ response: response.data })
 }
 
 
@@ -155,7 +157,7 @@ export const getSalasNames = async (state, stateset) => {
 
 
 export const getSalaPrestamoName = async (state, stateset) => {
-    const url = 'http://localhost:5000'
+    const url = 'http://localhost:8080'
     const endpoint = '/reservas/'
     const params = state.codigo
     const response = await axios.get(`${url}${endpoint}${params}`)
@@ -164,10 +166,10 @@ export const getSalaPrestamoName = async (state, stateset) => {
 }
 
 export const deleteReserva = async (state) => {
-    const url = 'http://localhost:5000'
-    const endpoint = '/api/usuarios/salas/borrar/'
+    const url = 'http://localhost:8080'
+    const endpoint = '/api/usuarios/salas/'
     const params = state.codigo
-    const response = await axios.patch(`${url}${endpoint}${params}`)
+    const response = await axios.delete(`${url}${endpoint}${params}`)
     return response
 }
 
@@ -177,7 +179,7 @@ export const deleteReserva = async (state) => {
 
 
 export const CreateMaterial = async (state) => {
-    const url = 'http://localhost:5000'
+    const url = 'http://localhost:8080'
     const endpoint = '/api/materiales'
     const bodyData = {
         "codigo": state.codigomaterial,
@@ -196,7 +198,7 @@ export const CreateMaterial = async (state) => {
 }
 
 export const updateMaterial = async (state) => {
-    const url = 'http://localhost:5000'
+    const url = 'http://localhost:8080'
     const endpoint = '/api/materiales/'
     const params = state.codigomaterial
     const bodyData = {
@@ -210,12 +212,12 @@ export const updateMaterial = async (state) => {
         "formato": state.formatomaterial,
 
     }
-    const response = await axios.patch(`${url}${endpoint}${params}`, bodyData)
+    const response = await axios.put(`${url}${endpoint}${params}`, bodyData)
     return response
 }
 
 export const deleteMaterial = async (state) => {
-    const url = 'http://localhost:5000'
+    const url = 'http://localhost:8080'
     const endpoint = '/api/materiales/'
     const params = state.codigomaterial
     const response = await axios.delete(`${url}${endpoint}${params}`)
@@ -227,7 +229,7 @@ export const deleteMaterial = async (state) => {
 
 
 export const CreateSalaEstudio = async (state) => {
-    const url = 'http://localhost:5000'
+    const url = 'http://localhost:8080'
     const endpoint = '/api/salas'
     const bodyData = {
         "codigo": state.codigosala,
@@ -241,7 +243,7 @@ export const CreateSalaEstudio = async (state) => {
 }
 
 export const updateSalaEstudio = async (state) => {
-    const url = 'http://localhost:5000'
+    const url = 'http://localhost:8080'
     const endpoint = '/api/salas/'
     const params = state.codigosala
     const bodyData = {
@@ -250,12 +252,12 @@ export const updateSalaEstudio = async (state) => {
         "inventario": ` Mesas: ${state.mesas}, Sillas: ${state.sillas},`,
         "numpersonas": state.num_max,
     }
-    const response = await axios.patch(`${url}${endpoint}${params}`, bodyData)
+    const response = await axios.put(`${url}${endpoint}${params}`, bodyData)
     return response
 }
 
 export const deleteSalaEstudio = async (state) => {
-    const url = 'http://localhost:5000'
+    const url = 'http://localhost:8080'
     const endpoint = '/api/salas/'
     const params = state.codigosala
     const response = await axios.delete(`${url}${endpoint}${params}`)
