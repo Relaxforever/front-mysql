@@ -8,7 +8,7 @@ import {
 import {
     Createuser, updateUser, deleteUser, getUserCode, getAllMaterials, CreatePrestamo, getbookPrestamoName,
     deletePrestamo, getAllSalas, CreateReserva, getSalaPrestamoName, deleteReserva, CreateMaterial, updateMaterial,
-    deleteMaterial, CreateSalaEstudio, updateSalaEstudio, deleteSalaEstudio
+    deleteMaterial, CreateSalaEstudio, updateSalaEstudio, deleteSalaEstudio, getUserCodePrestamo, getSalasNames
 } from "../../services/services"
 import './Form.css'
 
@@ -297,14 +297,14 @@ const Form = () => {
                         <div className="m-libros" onClick={() => {
                             setCurrentCode(element)
                         }} key={index}>
-                            <div className="m-formato">{element.Formato}</div>
-                            <div className="m-libro">{element.Nombre}</div>
+                            <div className="m-formato">{element.formato}</div>
+                            <div className="m-libro">{element.nombre}</div>
                         </div>
                     ))}
 
                 </div>
                 <div className="m-display">
-                    <p>Actualmente selecciono {currentCodeSelected.Nombre}</p>
+                    <p>Actualmente selecciono {currentCodeSelected.nombre}</p>
                 </div>
                 <InputForm
                     label="Fecha de prestamo"
@@ -338,10 +338,10 @@ const Form = () => {
         const [currentCodeSelected, setCurrentCode] = useState(0);
         const [allPrestamos, setallPrestamos] = useState([])
         useEffect(() => {
-            getbookPrestamoName(independentInfo, setallPrestamos);
-
+            //getbookPrestamoName(independentInfo, setallPrestamos);
+            getUserCodePrestamo(independentInfo, setallPrestamos);
         }, [])
-        //console.log(currentCodeSelected)
+        console.log(currentCodeSelected)
         console.log(allPrestamos)
         return (
             <div className="m-LoginSession">
@@ -349,12 +349,12 @@ const Form = () => {
                     Prestamos Actuales
                 </div>
                 <div className="m-all-books">
-                    {(allPrestamos.response && allPrestamos.response2) && allPrestamos.response.length !== 0 ? (
+                    {allPrestamos.response && allPrestamos.response.length !== 0 ? (
                         <div className="m-libros" onClick={() => {
-                            setCurrentCode(allPrestamos.response[0].Codigo)
+                            setCurrentCode(allPrestamos.response[0].codigoMaterial)
                         }}>
-                            <div className="m-formato">{allPrestamos.response2[0].Formato}</div>
-                            <div className="m-libro">{allPrestamos.response2[0].Nombre}</div>
+                            <div className="m-formato">{"Libro"}</div>
+                            <div className="m-libro">{allPrestamos.response[0].nombre}</div>
                         </div>
                     ) : ''
                     }
@@ -365,7 +365,7 @@ const Form = () => {
 
                 <div className="m-buttons">
                     <button className="button-5" onClick={() => goBack(5)}> Atras</button>
-                    <button className="button-5" onClick={() => deletePrestamo(currentCodeSelected)}> Devolver Prestamo </button>
+                    <button className="button-5" onClick={() => deletePrestamo(independentInfo, allPrestamos.response[0].nombre)}> Devolver Prestamo </button>
                 </div>
             </div>
         )
@@ -390,14 +390,14 @@ const Form = () => {
                         <div className="m-libros" onClick={() => {
                             setCurrentCode(element)
                         }} key={index}>
-                            <div className="m-formato">{element.Nombre}</div>
-                            <div className="m-libro">{element.Num_Personas_Max}</div>
+                            <div className="m-formato">{element.nombre}</div>
+                            <div className="m-libro">{element.numpersonas}</div>
                         </div>
                     ))}
 
                 </div>
                 <div className="m-display">
-                    <p>Actualmente selecciono {currentCodeSelected.Nombre}</p>
+                    <p>Actualmente selecciono {currentCodeSelected.nombre}</p>
 
                 </div>
                 <InputForm
@@ -442,23 +442,23 @@ const Form = () => {
         const [currentCodeSelected, setCurrentCode] = useState(0);
         const [allPrestamos, setallPrestamos] = useState([])
         useEffect(() => {
-            getSalaPrestamoName(independentInfo, setallPrestamos);
+            getSalasNames(independentInfo, setallPrestamos);
 
         }, [])
         //console.log(currentCodeSelected)
-        console.log(allPrestamos)
+        //console.log(allPrestamos)
         return (
             <div className="m-LoginSession">
                 <div className="m-titulopeliculas">
                     Prestamos Actuales
                 </div>
                 <div className="m-all-books">
-                    {(allPrestamos.response && allPrestamos.response2) && allPrestamos.response.length !== 0 ? (
+                    {allPrestamos.response && allPrestamos.response.length !== 0 ? (
                         <div className="m-libros" onClick={() => {
-                            setCurrentCode(allPrestamos.response[0].Codigo)
+                            setCurrentCode(allPrestamos.response[0].codigoMaterial)
                         }}>
-                            <div className="m-formato">{allPrestamos.response2[0].Nombre}</div>
-                            <div className="m-libro">{/*allPrestamos.response2[0].Nombre*/}</div>
+                            <div className="m-formato">{"Libro"}</div>
+                            <div className="m-libro">{allPrestamos.response[0].nombre}</div>
                         </div>
                     ) : ''
                     }
@@ -469,7 +469,7 @@ const Form = () => {
 
                 <div className="m-buttons">
                     <button className="button-5" onClick={() => goBack(6)}> Atras</button>
-                    <button className="button-5" onClick={() => deleteReserva(currentCodeSelected)}> Cancelar Reserva </button>
+                    <button className="button-5" onClick={() => deleteReserva(independentInfo)}> Cancelar Reserva </button>
                 </div>
             </div>
         )
